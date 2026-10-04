@@ -11,10 +11,10 @@ An end-to-end Product Analytics pipeline and interactive dashboard designed for 
 
 ## 🖥️ Live Interactive Dashboard
 
-👉 **[Click here to launch the live Streamlit Dashboard](https://your-app-url.streamlit.app)**
+ **[Click here to launch the live Streamlit Dashboard](https://nexusflow.streamlit.app/)**
 
-![NexusFlow Dashboard Preview](assets/dashboard_preview.png)
-*(Note: Replace `assets/dashboard_preview.png` with a screenshot or screen-recording GIF of your Streamlit app)*
+![NexusFlow Dashboard Preview](png/dashboard_preview.png)
+
 
 ---
 
