@@ -58,15 +58,25 @@ st.title("NexusFlow: Product-Led Growth Engine")
 st.markdown("Real-time telemetry tracking user activation loops, retention cohorts, and feature adoption.")
 st.markdown("---")
 
-# Load Data with Caching
+# Load Data with Caching & Safe Date Parsing
 @st.cache_data
 def load_data():
     try:
-        users = pd.read_csv('data/cleaned_users.csv', parse_dates=['signup_date'])
-        events = pd.read_csv('data/cleaned_events.csv', parse_dates=['timestamp', 'signup_date', 'signup_week', 'event_week'])
+        users = pd.read_csv('data/cleaned_users.csv')
+        if 'signup_date' in users.columns:
+            users['signup_date'] = pd.to_datetime(users['signup_date'])
+            
+        events = pd.read_csv('data/cleaned_events.csv')
+        
+        # Safely parse date columns if they exist in the CSV
+        date_cols = ['timestamp', 'signup_date', 'signup_week', 'event_week']
+        for col in date_cols:
+            if col in events.columns:
+                events[col] = pd.to_datetime(events[col], errors='coerce')
+                
         return users, events
-    except FileNotFoundError:
-        st.error("Cleaned dataset files not found. Please verify your Jupyter export files.")
+    except FileNotFoundError as e:
+        st.error(f"Cleaned dataset files not found inside 'data/': {e}")
         return pd.DataFrame(), pd.DataFrame()
 
 users_df, events_df = load_data()
